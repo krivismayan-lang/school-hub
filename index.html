@@ -2,114 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>School AI Hub & Sandbox</title>
+  <title>School Canvas & Sandbox Hub</title>
   
-  <!-- ULTRA-FAST LOADING LAYER -->
-  <script type="module" src="https://esm.run"></script>
+  <!-- ULTRA-FAST RESPONSIVENESS CAPABILITIES -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* RESET & CORE BASE */
-    * { box-sizing: border-box; }
-    body { background: #313338; color: #dbdee1; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; }
+    /* DISCORD PRO DESIGN RESET */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #313338; color: #dbdee1; font-family: 'Segoe UI', Tahoma, sans-serif; display: flex; height: 100vh; overflow: hidden; }
     
-    /* LEFT SIDEBAR (Discord Style) */
+    /* DISCORD SIDEBAR */
     .sidebar { width: 260px; background: #2b2d31; display: flex; flex-direction: column; padding: 15px; border-right: 1px solid #1f2023; }
-    .server-header { font-size: 16px; font-weight: bold; color: #fff; padding-bottom: 15px; border-bottom: 1px solid #3f4147; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-    .status-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #949ba4; font-weight: normal; }
-    .status-dot { width: 10px; height: 10px; background: #fee33e; border-radius: 50%; }
+    .server-title { font-size: 16px; font-weight: bold; color: #fff; padding-bottom: 15px; border-bottom: 1px solid #3f4147; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .shield-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; background: #1b5e20; color: #4caf50; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
     .channel-list { display: flex; flex-direction: column; gap: 4px; }
-    .channel-btn { padding: 10px 12px; border-radius: 6px; color: #949ba4; font-weight: 500; font-size: 15px; background: none; border: none; text-align: left; width: 100%; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .channel-btn.active { background: #35373c; color: #fff; }
-    .channel-btn:hover:not(.active) { background: #35373c; color: #dbdee1; }
-    .credits { margin-top: auto; font-size: 12px; color: #949ba4; text-align: center; border-top: 1px solid #3f4147; padding-top: 10px; }
+    .channel-item { padding: 10px 12px; border-radius: 6px; color: #949ba4; font-weight: 500; font-size: 15px; background: none; border: none; text-align: left; width: 100%; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .channel-item.active { background: #35373c; color: #fff; }
+    .footer-tag { margin-top: auto; font-size: 11px; color: #949ba4; text-align: center; border-top: 1px solid #3f4147; padding-top: 10px; }
 
-    /* CONTAINER LAYOUT */
-    .main-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; height: 100%; }
-    .panel { display: flex; flex-direction: column; background: #2b2d31; border: 1px solid #1f2023; border-radius: 8px; overflow: hidden; height: 100%; }
-    .panel-title { background: #2b2d31; padding: 14px 16px; font-weight: bold; color: #fff; border-bottom: 1px solid #1f2023; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* WORKSPACE COLUMN TILES */
+    .workspace { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 15px; padding: 15px; height: 100%; }
+    .panel { display: flex; flex-direction: column; background: #2b2d31; border: 1px solid #1f2023; border-radius: 8px; overflow: hidden; height: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .panel-header { background: #2b2d31; padding: 14px 16px; font-weight: bold; color: #fff; border-bottom: 1px solid #1f2023; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
     
-    /* PANEL A: CHAT COMPANION */
-    .chat-container { flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
-    .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #313338; }
-    .msg-bubble { max-width: 85%; padding: 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; }
-    .msg-bubble.user { background: #5865f2; color: #fff; align-self: flex-end; }
-    .msg-bubble.ai { background: #383a40; color: #dbdee1; align-self: flex-start; }
-    .sender-name { font-weight: bold; font-size: 11px; margin-bottom: 4px; text-transform: uppercase; color: #fff; }
-    .chat-input-row { display: flex; gap: 10px; padding: 15px; background: #2b2d31; border-top: 1px solid #1f2023; }
-    .chat-input-row input { flex: 1; background: #383a40; color: #dbdee1; border: none; border-radius: 6px; padding: 12px; outline: none; font-size: 14px; }
+    /* PANEL 1: COLLABORATIVE WHITEBOARD SYSTEM */
+    .canvas-container { flex: 1; background: #fff; position: relative; overflow: hidden; cursor: crosshair; }
+    #whiteboard { width: 100%; height: 100%; display: block; background: #ffffff; }
+    .toolbar { display: flex; gap: 10px; padding: 10px; background: #2b2d31; border-top: 1px solid #1f2023; align-items: center; }
+    .tool-select { background: #383a40; color: #fff; border: 1px solid #1f2023; padding: 8px; border-radius: 4px; outline: none; font-weight: bold; }
     
-    /* PANEL B: RIGHT SIDE (SPLIT EDITOR & PREVIEW) */
+    /* PANEL 2: RIGHT STACK DEPLOYMENT */
     .right-stack { display: flex; flex-direction: column; gap: 15px; height: 100%; }
     .editor-section { flex: 1.2; display: flex; flex-direction: column; }
     .preview-section { flex: 1; display: flex; flex-direction: column; }
     
-    textarea { flex: 1; background: #1e1f22; color: #00ff66; border: none; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 13px; resize: none; outline: none; border-bottom: 1px solid #1f2023; }
+    textarea { flex: 1; background: #1e1f22; color: #00ff66; border: none; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; resize: none; outline: none; border-bottom: 1px solid #1f2023; }
     iframe { flex: 1; background: #ffffff; border: none; }
 
-    /* SEPARATE, STABLE ACTION BUTTONS */
+    /* ACTION UTILITY BUTTONS */
     .action-bar { display: flex; gap: 10px; padding: 10px; background: #2b2d31; }
-    .control-btn { flex: 1; background: #5865f2; color: #fff; border: none; border-radius: 5px; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.15s ease; text-align: center; }
-    .control-btn:hover { background: #4752c4; }
-    .control-btn.download-btn { background: #248046; }
-    .control-btn.download-btn:hover { background: #1a6535; }
+    .btn { flex: 1; background: #5865f2; color: #fff; border: none; border-radius: 5px; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.15s; text-align: center; }
+    .btn:hover { background: #4752c4; }
+    .btn.clear-btn { background: #da373c; }
+    .btn.clear-btn:hover { background: #a92b2f; }
+    .btn.save-btn { background: #248046; }
+    .btn.save-btn:hover { background: #1a6535; }
   </style>
 </head>
 <body>
 
   <!-- LEFT SIDEBAR -->
   <div class="sidebar">
-    <div class="server-header">
-      <span>🏫 School Hub</span>
-      <div class="status-badge">
-        <div id="status-dot" class="status-dot"></div>
-        <span id="status-text">Connecting...</span>
-      </div>
+    <div class="server-title">
+      <span>🏫 School Workspace</span>
+      <div class="shield-badge">🛡️ PROT-ON</div>
     </div>
     <div class="channel-list">
-      <button class="channel-btn active">💬 # sandbox-chat</button>
-      <button class="channel-btn">🎮 # student-games</button>
+      <button class="channel-item active">🎨 # team-whiteboard</button>
+      <button class="channel-item">🎮 # code-sandbox</button>
     </div>
-    <div class="credits">
-      Dev Project Cluster 🚀
+    <div class="footer-tag">
+      Secure Network Firewall Active 🔒
     </div>
   </div>
 
-  <!-- MAIN WORKSPACE CONTAINER -->
-  <div class="main-grid">
+  <!-- WORKSPACE INTERACTIVE GRID -->
+  <div class="workspace">
     
-    <!-- LEFT PANEL: CHAT HUB -->
+    <!-- LEFT PANEL: WHITEBOARD GRAPHICS SCREEN -->
     <div class="panel">
-      <div class="panel-title">💬 Discord AI Assistant</div>
-      <div class="chat-container">
-        <div id="chat-messages" class="chat-messages">
-          <div class="msg-bubble ai">
-            <div class="sender-name">Clyde AI</div>
-            Hey there! Ask me to create any game or app in HTML and JavaScript. Once I give you the code, copy it and paste it into the Game Code Canvas on the right side!
-          </div>
-        </div>
-        <div class="chat-input-row">
-          <input type="text" id="chat-input" placeholder="Message #sandbox-chat...">
-          <button class="control-btn" style="flex: 0; padding: 12px 20px;" onclick="sendChatMessage()">Send</button>
-        </div>
+      <div class="panel-header">🎨 Interactive Drawing Canvas</div>
+      <div class="canvas-container">
+        <canvas id="whiteboard"></canvas>
+      </div>
+      <div class="toolbar">
+        <select id="brush-color" class="tool-select">
+          <option value="#000000">⬛ Black ink</option>
+          <option value="#5865f2">🔷 Discord Blue</option>
+          <option value="#23a55a">🟩 Matrix Green</option>
+          <option value="#f23f43">🟥 Error Red</option>
+        </select>
+        <select id="brush-size" class="tool-select">
+          <option value="3">Thin Pen</option>
+          <option value="8">Medium Marker</option>
+          <option value="15">Thick Crayon</option>
+        </select>
+        <button class="btn clear-btn" style="flex:0; padding:10px 20px;" onclick="clearWhiteboard()">Clear Canvas</button>
       </div>
     </div>
 
-    <!-- RIGHT PANEL: CODE WORKSPACE STACK -->
+    <!-- RIGHT PANEL: GAME SANDBOX STACK -->
     <div class="right-stack">
       
-      <!-- TOP RIGHT: EDITOR -->
+      <!-- TOP PORTION: EDITOR ENGINE -->
       <div class="panel editor-section">
-        <div class="panel-title">⚙️ Game Code Canvas</div>
-        <textarea id="code-canvas" placeholder="<!-- Paste your code right here, then hit 'Run Project' below -->"></textarea>
+        <div class="panel-header">⚙️ App / Game Code Canvas</div>
+        <textarea id="code-canvas" placeholder="<!-- Type or paste structural HTML, CSS, or JS code here to instantly load applications -->"></textarea>
         <div class="action-bar">
-          <button class="control-btn" onclick="executeCanvasCode()">▶ Run Project</button>
-          <button class="control-btn download-btn" onclick="triggerFileDownload()">💾 Save App</button>
+          <button class="btn" onclick="runSandboxCode()">▶ Run Project</button>
+          <button class="btn save-btn" onclick="downloadSandboxProject()">💾 Save App</button>
         </div>
       </div>
       
-      <!-- BOTTOM RIGHT: LIVE OUTPUT screen -->
+      <!-- BOTTOM PORTION: LIVE SANDBOX DISPLAY -->
       <div class="panel preview-section">
-        <div class="panel-title">📺 Interactive Live Screen</div>
+        <div class="panel-header">📺 Interactive Live Screen</div>
         <iframe id="live-display-frame"></iframe>
       </div>
 
@@ -117,81 +115,72 @@
 
   </div>
 
-  <!-- CLIENT AI SCRIPT -->
-  <script type="module">
-    import * as webllm from "https://esm.run";
-    
-    let aiEngine;
-    const dot = document.getElementById("status-dot");
-    const txt = document.getElementById("status-text");
-    
-    async function startLocalAIEngine() {
-      try {
-        aiEngine = await webllm.CreateEngine("qwen2.5-0.5b-instruct");
-        dot.style.background = "#23a55a"; // Discord Green
-        txt.innerText = "Online";
-        txt.style.color = "#23a55a";
-      } catch (e) {
-        dot.style.background = "#f23f43"; // Discord Red
-        txt.innerText = "Error";
-        txt.style.color = "#f23f43";
-        console.error(e);
-      }
-    }
-    
-    window.sendChatMessage = async function() {
-      const field = document.getElementById("chat-input");
-      const logs = document.getElementById("chat-messages");
-      const userText = field.value.trim();
-      
-      if (!userText || !aiEngine) return;
-      
-      field.value = "";
-      logs.innerHTML += `<div class="msg-bubble user"><div class="sender-name">You</div>${userText}</div>`;
-      logs.scrollTop = logs.scrollHeight;
-      
-      const replyBox = document.createElement("div");
-      replyBox.className = "msg-bubble ai";
-      replyBox.innerHTML = `<div class="sender-name">Clyde AI</div>Thinking...`;
-      logs.appendChild(replyBox);
-      logs.scrollTop = logs.scrollHeight;
-      
-      try {
-        const responseFrame = await aiEngine.chat.completions.create({
-          messages: [{ role: "user", content: userText }]
-        });
-        replyBox.innerHTML = `<div class="sender-name">Clyde AI</div>${responseFrame.choices.message.content}`;
-      } catch (err) {
-        replyBox.innerHTML = `<div class="sender-name">Clyde AI</div>Could not complete request inside this window.`;
-      }
-      logs.scrollTop = logs.scrollHeight;
-    }
-    
-    startLocalAIEngine();
-  </script>
-
-  <!-- CONTROL SCRIPT -->
+  <!-- INTERACTIVE WHITEBOARD FUNCTIONALITY LOGIC -->
   <script>
-    function executeCanvasCode() {
-      const sandboxCode = document.getElementById("code-canvas").value;
-      const displayScreen = document.getElementById("live-display-frame");
-      const targetDoc = displayScreen.contentDocument || displayScreen.contentWindow.document;
+    const canvas = document.getElementById('whiteboard');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    // Correctly scale canvas resolution bounds inside grid element
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      ctx.lineCap = 'round';
+    }
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', resizeCanvas);
+
+    // Event hooks for structural canvas input tracking
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Touch support for school Chromebook tablet variants
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function startDrawing(e) {
+      drawing = true;
+      ctx.beginPath();
+      const rect = canvas.getBoundingClientRect();
+      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      ctx.lineWidth = document.getElementById('brush-size').value;
+      ctx.strokeStyle = document.getElementById('brush-color').value;
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.stroke();
+    }
+
+    function stopDrawing() { drawing = false; }
+    function clearWhiteboard() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    // Sandbox execution pipeline operations
+    function runSandboxCode() {
+      const code = document.getElementById("code-canvas").value;
+      const targetScreen = document.getElementById("live-display-frame");
+      const targetDoc = targetScreen.contentDocument || targetScreen.contentWindow.document;
       targetDoc.open();
-      targetDoc.write(sandboxCode);
+      targetDoc.write(code);
       targetDoc.close();
     }
 
-    function triggerFileDownload() {
-      const data = document.getElementById("code-canvas").value;
-      if(!data) { alert("Your editor canvas is empty!"); return; }
-      const localizedBlob = new Blob([data], {type:'text/html'});
-      const downloadAnchor = document.createElement("a");
-      downloadAnchor.download = "my_custom_school_game.html";
-      downloadAnchor.href = window.URL.createObjectURL(localizedBlob);
-      downloadAnchor.style.display = "none";
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      document.body.removeChild(downloadAnchor);
+    function downloadSandboxProject() {
+      const inputData = document.getElementById("code-canvas").value;
+      if(!inputData) { alert("Your editor canvas is empty!"); return; }
+      const elementBlob = new Blob([inputData], {type:'text/html'});
+      const tempLink = document.createElement("a");
+      tempLink.download = "my_custom_school_app.html";
+      tempLink.href = window.URL.createObjectURL(elementBlob);
+      tempLink.style.display = "none";
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
     }
   </script>
 </body>
