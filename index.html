@@ -2,186 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>School Canvas & Sandbox Hub</title>
-  
-  <!-- ULTRA-FAST RESPONSIVENESS CAPABILITIES -->
+  <title>School Project Hub & Secure Workspace</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    /* DISCORD PRO DESIGN RESET */
+    /* CORE DASHBOARD THEME (Clean, Light Corporate Gray) */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #313338; color: #dbdee1; font-family: 'Segoe UI', Tahoma, sans-serif; display: flex; height: 100vh; overflow: hidden; }
-    
-    /* DISCORD SIDEBAR */
-    .sidebar { width: 260px; background: #2b2d31; display: flex; flex-direction: column; padding: 15px; border-right: 1px solid #1f2023; }
-    .server-title { font-size: 16px; font-weight: bold; color: #fff; padding-bottom: 15px; border-bottom: 1px solid #3f4147; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-    .shield-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; background: #1b5e20; color: #4caf50; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-    .channel-list { display: flex; flex-direction: column; gap: 4px; }
-    .channel-item { padding: 10px 12px; border-radius: 6px; color: #949ba4; font-weight: 500; font-size: 15px; background: none; border: none; text-align: left; width: 100%; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .channel-item.active { background: #35373c; color: #fff; }
-    .footer-tag { margin-top: auto; font-size: 11px; color: #949ba4; text-align: center; border-top: 1px solid #3f4147; padding-top: 10px; }
+    body { background: #f4f5f7; color: #172b4d; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; height: 100vh; overflow: hidden; }
 
-    /* WORKSPACE COLUMN TILES */
-    .workspace { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 15px; padding: 15px; height: 100%; }
-    .panel { display: flex; flex-direction: column; background: #2b2d31; border: 1px solid #1f2023; border-radius: 8px; overflow: hidden; height: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .panel-header { background: #2b2d31; padding: 14px 16px; font-weight: bold; color: #fff; border-bottom: 1px solid #1f2023; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
+    /* LEFT SIDE NAVIGATION PANEL */
+    .left-nav { width: 240px; background: #ffffff; border-right: 1px solid #dfe1e6; display: flex; flex-direction: column; padding: 20px 15px; }
+    .logo-area { font-size: 18px; font-weight: 700; color: #0052cc; margin-bottom: 30px; display: flex; align-items: center; gap: 8px; }
+    .nav-section-title { font-size: 11px; font-weight: 700; color: #6b778c; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .nav-item { padding: 10px 12px; border-radius: 6px; font-size: 14px; font-weight: 500; color: #42526e; background: none; border: none; text-align: left; width: 100%; cursor: pointer; margin-bottom: 4px; outline: none; transition: all 0.15s ease; }
+    .nav-item.active { background: #deebff; color: #0747a6; font-weight: 600; }
+    .nav-item:hover:not(.active) { background: #f4f5f7; color: #172b4d; }
+
+    /* MAIN TILED CONTAINER LAYOUT */
+    .dashboard-body { flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
+    .dashboard-topbar { height: 60px; background: #ffffff; border-bottom: 1px solid #dfe1e6; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; }
+    .dashboard-title { font-size: 20px; font-weight: 600; color: #172b4d; }
     
-    /* PANEL 1: COLLABORATIVE WHITEBOARD SYSTEM */
-    .canvas-container { flex: 1; background: #fff; position: relative; overflow: hidden; cursor: crosshair; }
-    #whiteboard { width: 100%; height: 100%; display: block; background: #ffffff; }
-    .toolbar { display: flex; gap: 10px; padding: 10px; background: #2b2d31; border-top: 1px solid #1f2023; align-items: center; }
-    .tool-select { background: #383a40; color: #fff; border: 1px solid #1f2023; padding: 8px; border-radius: 4px; outline: none; font-weight: bold; }
+    /* MODULAR CONTAINER SCREENS */
+    .view-panel { display: none; height: calc(100vh - 60px); width: 100%; overflow: hidden; }
+    .view-panel.active-view { display: block; }
+
+    /* 3-COLUMN WORKSPACE FOR MAIN DASHBOARD */
+    .workspace-columns { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 20px; padding: 20px; height: 100%; overflow: hidden; }
+    .column-card { background: #ffffff; border: 1px solid #dfe1e6; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .column-header { background: #fafbfc; padding: 15px; font-weight: 600; font-size: 14px; border-bottom: 1px solid #dfe1e6; display: flex; justify-content: space-between; align-items: center; }
+    .counter-badge { background: #dfe1e6; color: #42526e; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+
+    /* INNER PANEL DOCUMENTATION SCREEN LAYOUT */
+    .inner-doc { padding: 30px; overflow-y: auto; height: 100%; background: #ffffff; margin: 20px; border-radius: 8px; border: 1px solid #dfe1e6; }
+    .inner-doc h2 { color: #0052cc; margin-bottom: 15px; font-size: 22px; }
+    .inner-doc p { font-size: 15px; line-height: 1.6; color: #42526e; margin-bottom: 12px; }
+    .inner-doc ul { margin-left: 20px; margin-bottom: 15px; color: #42526e; }
+    .inner-doc li { margin-bottom: 6px; font-size: 14px; }
+
+    /* COLUMN 1: WHITEBOARD DRAWING SYSTEM */
+    .canvas-wrapper { flex: 1; background: #f9f9fb; position: relative; cursor: crosshair; }
+    #whiteboard { width: 100%; height: 100%; display: block; }
+    .whiteboard-controls { display: flex; gap: 8px; padding: 12px; background: #fafbfc; border-top: 1px solid #dfe1e6; align-items: center; }
+    .tool-dropdown { background: #ffffff; border: 1px solid #c1c7d0; padding: 6px 10px; border-radius: 4px; font-size: 13px; color: #172b4d; outline: none; font-weight: 500; cursor: pointer; }
+
+    /* COLUMN 2: CODE CANVAS */
+    textarea { flex: 1; background: #1e1e1e; color: #39ff14; border: none; padding: 15px; font-family: 'Courier New', monospace; font-size: 13px; resize: none; outline: none; }
     
-    /* PANEL 2: RIGHT STACK DEPLOYMENT */
-    .right-stack { display: flex; flex-direction: column; gap: 15px; height: 100%; }
-    .editor-section { flex: 1.2; display: flex; flex-direction: column; }
-    .preview-section { flex: 1; display: flex; flex-direction: column; }
-    
-    textarea { flex: 1; background: #1e1f22; color: #00ff66; border: none; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; resize: none; outline: none; border-bottom: 1px solid #1f2023; }
+    /* COLUMN 3: LIVE SCREEN PREVIEW */
     iframe { flex: 1; background: #ffffff; border: none; }
 
     /* ACTION UTILITY BUTTONS */
-    .action-bar { display: flex; gap: 10px; padding: 10px; background: #2b2d31; }
-    .btn { flex: 1; background: #5865f2; color: #fff; border: none; border-radius: 5px; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.15s; text-align: center; }
-    .btn:hover { background: #4752c4; }
-    .btn.clear-btn { background: #da373c; }
-    .btn.clear-btn:hover { background: #a92b2f; }
-    .btn.save-btn { background: #248046; }
-    .btn.save-btn:hover { background: #1a6535; }
+    .action-row { display: flex; gap: 8px; padding: 12px; background: #fafbfc; border-top: 1px solid #dfe1e6; }
+    .action-btn { flex: 1; background: #0052cc; color: #ffffff; border: none; border-radius: 4px; padding: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.1s; text-align: center; outline: none; }
+    .action-btn:hover { background: #0065ff; }
+    .action-btn.danger { background: #de350b; }
+    .action-btn.danger:hover { background: #ff5630; }
+    .action-btn.success { background: #36b37e; }
+    .action-btn.success:hover { background: #57d9a3; }
+
+    /* RIGHT SIDEBAR (Antivirus & Protection Hub) */
+    .right-sidebar { width: 280px; background: #ffffff; border-left: 1px solid #dfe1e6; display: flex; flex-direction: column; padding: 20px; }
+    .profile-area { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #dfe1e6; margin-bottom: 20px; }
+    .shield-icon { width: 60px; height: 60px; background: #e3fcef; color: #36b37e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; font-size: 24px; font-weight: bold; }
+    .system-status-text { font-size: 16px; font-weight: 600; color: #172b4d; }
+    .system-status-sub { font-size: 12px; color: #36b37e; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+    .log-container { flex: 1; background: #fafbfc; border: 1px solid #dfe1e6; border-radius: 6px; padding: 12px; overflow-y: auto; font-size: 11px; font-family: monospace; display: flex; flex-direction: column; gap: 8px; }
+    .log-line { color: #6b778c; border-bottom: 1px solid #f4f5f7; padding-bottom: 4px; line-height: 1.3; }
+    .log-line.secure { color: #006644; font-weight: 600; }
   </style>
 </head>
 <body>
 
-  <!-- LEFT SIDEBAR -->
-  <div class="sidebar">
-    <div class="server-title">
-      <span>🏫 School Workspace</span>
-      <div class="shield-badge">🛡️ PROT-ON</div>
-    </div>
-    <div class="channel-list">
-      <button class="channel-item active">🎨 # team-whiteboard</button>
-      <button class="channel-item">🎮 # code-sandbox</button>
-    </div>
-    <div class="footer-tag">
-      Secure Network Firewall Active 🔒
-    </div>
+  <!-- LEFT SIDEBAR SIDE NAVIGATION -->
+  <div class="left-nav">
+    <div class="logo-area">📦 Unique Workspace</div>
+    <div class="nav-section-title">Favorites</div>
+    <button class="nav-item active" onclick="switchDashboardTab('main-dash', this)">📋 Main Dashboard</button>
+    <button class="nav-item" onclick="switchDashboardTab('settings-dash', this)">🛠️ Shared Settings</button>
+    <div class="nav-section-title" style="margin-top:20px;">Projects</div>
+    <button class="nav-item" onclick="switchDashboardTab('canvas-dash', this)">💼 School Canvas</button>
+    <button class="nav-item" onclick="switchDashboardTab('testing-dash', this)">🧪 Code Testing Room</button>
   </div>
 
-  <!-- WORKSPACE INTERACTIVE GRID -->
-  <div class="workspace">
+  <!-- CENTRAL VIEW CONTROL ELEMENT -->
+  <div class="dashboard-body">
     
-    <!-- LEFT PANEL: WHITEBOARD GRAPHICS SCREEN -->
-    <div class="panel">
-      <div class="panel-header">🎨 Interactive Drawing Canvas</div>
-      <div class="canvas-container">
-        <canvas id="whiteboard"></canvas>
-      </div>
-      <div class="toolbar">
-        <select id="brush-color" class="tool-select">
-          <option value="#000000">⬛ Black ink</option>
-          <option value="#5865f2">🔷 Discord Blue</option>
-          <option value="#23a55a">🟩 Matrix Green</option>
-          <option value="#f23f43">🟥 Error Red</option>
-        </select>
-        <select id="brush-size" class="tool-select">
-          <option value="3">Thin Pen</option>
-          <option value="8">Medium Marker</option>
-          <option value="15">Thick Crayon</option>
-        </select>
-        <button class="btn clear-btn" style="flex:0; padding:10px 20px;" onclick="clearWhiteboard()">Clear Canvas</button>
-      </div>
+    <!-- TOP BAR RUNTIME ACCENT -->
+    <div class="dashboard-topbar">
+      <div id="active-tab-title" class="dashboard-title">Main Dashboard</div>
+      <div style="font-size: 13px; color: #6b778c; font-weight: 500;">Network Connections: <strong style="color:#0747a6;">100+ Chromebooks Active</strong></div>
     </div>
 
-    <!-- RIGHT PANEL: GAME SANDBOX STACK -->
-    <div class="right-stack">
-      
-      <!-- TOP PORTION: EDITOR ENGINE -->
-      <div class="panel editor-section">
-        <div class="panel-header">⚙️ App / Game Code Canvas</div>
-        <textarea id="code-canvas" placeholder="<!-- Type or paste structural HTML, CSS, or JS code here to instantly load applications -->"></textarea>
-        <div class="action-bar">
-          <button class="btn" onclick="runSandboxCode()">▶ Run Project</button>
-          <button class="btn save-btn" onclick="downloadSandboxProject()">💾 Save App</button>
+    <!-- VIEW PANEL 1: MAIN KANBAN MULTI-COLUMN INTERFACE -->
+    <div id="main-dash" class="view-panel active-view">
+      <div class="workspace-columns">
+        
+        <!-- WHITEBOARD DRAWING CELL -->
+        <div class="column-card">
+          <div class="column-header">
+            <span>Interactive Board</span>
+            <div class="counter-badge">Drawing Canvas</div>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="whiteboard"></canvas>
+          </div>
+          <div class="whiteboard-controls">
+            <select id="brush-color" class="tool-dropdown">
+              <option value="#172b4d">⬛ Standard Dark</option>
+              <option value="#0052cc">🟦 Corporate Blue</option>
+              <option value="#36b37e">🟩 Safe Green</option>
+              <option value="#de350b">🟥 Warning Red</option>
+            </select>
+            <select id="brush-size" class="tool-dropdown">
+              <option value="3">Fine Point</option>
+              <option value="8">Medium Marker</option>
+              <option value="16">Wide Chalk</option>
+            </select>
+            <button class="action-btn danger" style="flex:0; padding:6px 12px; font-size:12px;" onclick="clearCanvasArea()">Clear</button>
+          </div>
         </div>
-      </div>
-      
-      <!-- BOTTOM PORTION: LIVE SANDBOX DISPLAY -->
-      <div class="panel preview-section">
-        <div class="panel-header">📺 Interactive Live Screen</div>
-        <iframe id="live-display-frame"></iframe>
-      </div>
 
+        <!-- CODE WORKSPACE TEXT REGION -->
+        <div class="column-card">
+          <div class="column-header">
+            <span>Application Code</span>
+            <div class="counter-badge">Canvas Input</div>
+          </div>
+          <textarea id="code-canvas" placeholder="<!-- Paste your HTML/CSS/JS game script code here -->"></textarea>
+          <div class="action-row">
+            <button class="action-btn" onclick="buildProjectFrame()">▶ Run Project</button>
+            <button class="action-btn success" onclick="downloadProjectFile()">💾 Export Code</button>
+          </div>
+        </div>
+
+        <!-- OUTBOARD LIVE IFRAME MODULE -->
+        <div class="column-card">
+          <div class="column-header">
+            <span>Live Preview Screen</span>
+            <div class="counter-badge">Active View</div>
+          </div>
+          <iframe id="live-display-frame"></iframe>
+        </div>
+
+      </div>
     </div>
 
-  </div>
+    <!-- VIEW PANEL 2: SHARED SETTINGS PANEL DOCUMENTATION -->
+    <div id="settings-dash" class="view-panel">
+      <div class="inner-doc">
+        <h2>System Configuration & Policy Manual</h2>
+        <p>Welcome to the administrative controls layout frame. This hub runs automatic isolation sandboxes on local Chromebook clients.</p>
+        <p><strong>Configured Network Modules:</strong></p>
+        <ul>
+          <li>Cache Header Life Cycle Constraints: 604800 Seconds (Active)</li>
+          <li>Frame Ancestors Inbound Rules Configuration: Deny External</li>
+          <li>Content Delivery Paths Acceleration framework: Active via esm.run</li>
+        </ul>
+        <p>To upgrade layout blocks, edit the main configuration repository branch files from your root admin device context.</p>
+      </div>
+    </div>
 
-  <!-- INTERACTIVE WHITEBOARD FUNCTIONALITY LOGIC -->
-  <script>
-    const canvas = document.getElementById('whiteboard');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-
-    // Correctly scale canvas resolution bounds inside grid element
-    function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-      ctx.lineCap = 'round';
-    }
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('load', resizeCanvas);
-
-    // Event hooks for structural canvas input tracking
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseout', stopDrawing);
-
-    // Touch support for school Chromebook tablet variants
-    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
-    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
-    canvas.addEventListener('touchend', stopDrawing);
-
-    function startDrawing(e) {
-      drawing = true;
-      ctx.beginPath();
-      const rect = canvas.getBoundingClientRect();
-      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-    }
-
-    function draw(e) {
-      if (!drawing) return;
-      const rect = canvas.getBoundingClientRect();
-      ctx.lineWidth = document.getElementById('brush-size').value;
-      ctx.strokeStyle = document.getElementById('brush-color').value;
-      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-      ctx.stroke();
-    }
-
-    function stopDrawing() { drawing = false; }
-    function clearWhiteboard() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-
-    // Sandbox execution pipeline operations
-    function runSandboxCode() {
-      const code = document.getElementById("code-canvas").value;
-      const targetScreen = document.getElementById("live-display-frame");
-      const targetDoc = targetScreen.contentDocument || targetScreen.contentWindow.document;
-      targetDoc.open();
-      targetDoc.write(code);
-      targetDoc.close();
-    }
-
-    function downloadSandboxProject() {
-      const inputData = document.getElementById("code-canvas").value;
-      if(!inputData) { alert("Your editor canvas is empty!"); return; }
-      const elementBlob = new Blob([inputData], {type:'text/html'});
-      const tempLink = document.createElement("a");
-      tempLink.download = "my_custom_school_app.html";
-      tempLink.href = window.URL.createObjectURL(elementBlob);
-      tempLink.style.display = "none";
-      document.body.appendChild(tempLink);
-      tempLink.click();
-      document.body.removeChild(tempLink);
-    }
-  </script>
-</body>
-</html>
